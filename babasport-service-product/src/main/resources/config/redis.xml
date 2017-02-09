@@ -1,0 +1,73 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/task
+   		http://www.springframework.org/schema/task/spring-task-4.0.xsd
+		http://code.alibabatech.com/schema/dubbo        
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+		<!-- redis客户端 -->
+		<bean id="jedis" class="redis.clients.jedis.Jedis">
+			<constructor-arg value="192.168.200.128" index="0" type="java.lang.String"/>
+			<constructor-arg value="6379" index="1"/>
+		</bean>
+		
+		<!-- 
+		集群
+		Set<HostAndPort> nodes = new HashSet<HostAndPort>();
+		//六个
+		nodes.add(new HostAndPort("192.168.200.128",6379));
+		nodes.add(new HostAndPort("192.168.200.128",6380));
+		nodes.add(new HostAndPort("192.168.200.128",6381));
+		nodes.add(new HostAndPort("192.168.200.128",6382));
+		nodes.add(new HostAndPort("192.168.200.128",6383));
+		nodes.add(new HostAndPort("192.168.200.128",6384));
+		JedisCluster jc = new JedisCluster(nodes);
+		 -->
+		 <bean id="jc" class="redis.clients.jedis.JedisCluster">
+		 	<constructor-arg>
+		 		<set>
+		 			<bean class="redis.clients.jedis.HostAndPort">
+		 				<constructor-arg name="host" value="192.168.200.128" />
+		 				<constructor-arg name="port" value="6379"/>
+		 			</bean>
+		 			<bean class="redis.clients.jedis.HostAndPort">
+		 				<constructor-arg name="host" value="192.168.200.128" />
+		 				<constructor-arg name="port" value="6380"/>
+		 			</bean>
+		 			<bean class="redis.clients.jedis.HostAndPort">
+		 				<constructor-arg name="host" value="192.168.200.128" />
+		 				<constructor-arg name="port" value="6381"/>
+		 			</bean>
+		 			<bean class="redis.clients.jedis.HostAndPort">
+		 				<constructor-arg name="host" value="192.168.200.128" />
+		 				<constructor-arg name="port" value="6382"/>
+		 			</bean>
+		 			<bean class="redis.clients.jedis.HostAndPort">
+		 				<constructor-arg name="host" value="192.168.200.128" />
+		 				<constructor-arg name="port" value="6383"/>
+		 			</bean>
+		 			<bean class="redis.clients.jedis.HostAndPort">
+		 				<constructor-arg name="host" value="192.168.200.128" />
+		 				<constructor-arg name="port" value="6384"/>
+		 			</bean>
+		 		</set>
+		 	</constructor-arg>
+		 </bean>
+	
+		
+</beans>
